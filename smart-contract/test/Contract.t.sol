@@ -5,20 +5,25 @@ import {Test, console} from "forge-std/Test.sol";
 import {Contract} from "../src/Contract.sol";
 
 contract CounterTest is Test {
-    Counter public counter;
+    Contract myContract;
 
-    function setUp() public {
-        counter = new Counter();
-        counter.setNumber(0);
+    function setup() public {
+        myContract = new Contract();
     }
 
-    function test_Increment() public {
-        counter.increment();
-        assertEq(counter.number(), 1);
+    function testAssignTask() public {
+        contract.assignTask(address(this));
+        assertEq(contract.assignee(), address(this));
     }
 
-    function testFuzz_SetNumber(uint256 x) public {
-        counter.setNumber(x);
-        assertEq(counter.number(), x);
+    function testAddNewUser() public {
+        contract.addNewUser(address(this));
+        assert(contract.users(address(this)));
+    }
+
+    function testRemoveUser() public {
+        contract.addNewUser(address(this));
+        contract.removeUser(address(this));
+        assert(!contract.users(address(this)));
     }
 }

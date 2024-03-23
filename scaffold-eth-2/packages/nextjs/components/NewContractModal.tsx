@@ -1,9 +1,23 @@
 import React, { useState } from "react";
+import { parseEther } from "viem";
+import { useScaffoldContractWrite } from "~~/hooks/scaffold-eth";
 
 export default function NewContractModal({ closeModal }: { closeModal: () => void }) {
   const [colaboradores, setColaboradores] = useState<string[]>([]);
   const [dataVencimento, setDataVencimento] = useState("");
   const [hashColaborador, setHashColaborador] = useState("");
+  const [userInput, setUserInput] = useState<string>("");
+
+  const { writeAsync, isLoading, isMining } = useScaffoldContractWrite({
+    contractName: "YourContract",
+    functionName: "addContract",
+    args: ["The value to set", undefined, undefined, []],
+    value: parseEther("0.1"),
+    blockConfirmations: 1,
+    onBlockConfirmation: txnReceipt => {
+      console.log("Transaction blockHash", txnReceipt.blockHash);
+    },
+  });
 
   const addColaborador = () => {
     // Você pode adicionar lógica para inserir um novo colaborador, talvez um modal separado ou um input
@@ -12,9 +26,16 @@ export default function NewContractModal({ closeModal }: { closeModal: () => voi
   };
 
   const handleSubmit = (e: React.FormEvent) => {
+
+    try {
+      writeAsync();
+      console.log('Transação enviada com sucesso!');
+    }
+    catch (error) {
+      console.error('Erro ao escrever', error);
+    }
+    
     e.preventDefault();
-    // Aqui você manipularia a submissão do novo contrato
-    // Incluindo salvar os colaboradores e a data de vencimento
   };
 
   // Função para remover colaborador da lista (você deve definir essa função)
@@ -37,10 +58,10 @@ export default function NewContractModal({ closeModal }: { closeModal: () => voi
               <label className="block text-sm font-medium mb-1" htmlFor="nome">
                 Nome do contrato:
               </label>
-              <input type="text" id="nome" placeholder="Nome do contrato" className="border p-1 w-full" />
+              <input type="text" id="nome" placeholder="Nome do contrato" className="border p-1 w-full" value={userInput} onChange={e => setUserInput(e.target.value)}/>
             </div>
             <label className="block text-sm font-medium mb-1" htmlFor="colaboradores">
-              Colaboradores
+              Endereço da carteira dos assinantes:
             </label>
             <div className="flex items-center mb-2">
               <ul>

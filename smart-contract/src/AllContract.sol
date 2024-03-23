@@ -42,6 +42,17 @@ contract RealContract {
         }
         return _contractR;
     }
+        function getCompleteContracts(address _assignee) public view returns (contractR[] memory) {
+        uint[] memory _contracts = assigneesContractList[_assignee];
+        contractR[] memory _contractR = new contractR[](_contracts.length);
+        for (uint i = 0; i < _contracts.length; i++) {
+            if(!contracts[_contracts[i]].status){
+            _contractR[i] = contracts[_contracts[i]];
+
+            }
+        }
+        return _contractR;
+    }
     function assignContract(address _assignee,address _owner ) public {
         uint[] memory _contracts = assigneesContractList[_assignee];
         if (_assignee == _owner) {

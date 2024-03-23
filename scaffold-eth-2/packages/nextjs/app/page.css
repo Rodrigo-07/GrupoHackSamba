@@ -36,7 +36,7 @@
 .welcome-message h2 {
     font-size: 4em;
     font-family: 'Futura', sans-serif;
-    margin-top: 80px;
+    margin-top: 25%;
     margin-right: 40px;
     color: #F2F2F3;
     text-align: right;
@@ -45,9 +45,8 @@
 .welcome-message p {
     color: #F2F2F3;
     display: flex;
-    text-align: right;
-    justify-content: start;
     gap: 0.5rem;
+    margin-left: 550px;
 }
 
 .logo {

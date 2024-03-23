@@ -1,0 +1,56 @@
+.main-content {
+    display: flex;
+    justify-content: space-between;
+    padding: 20px;
+    background: linear-gradient(to right, #000000, #8C54FB);
+}
+
+.brand-section {
+    margin-left: 40px;
+    color: #F2F2F3;
+}
+
+.brand-section h1 {
+    font-size: 3em;
+    font-family: 'Futura', sans-serif;
+    margin-top: 10px;
+    color: #8C54FB;
+}
+
+.brand-section p {
+    font-family: 'Futura', sans-serif;
+    color: #F2F2F3;
+    font-size: 1.5em;
+}
+
+.access-documents {
+    background-color: #1ebaf9;
+    border: none;
+    padding: 10px 20px;
+    margin-top: 10px;
+    font-family: 'Futura', sans-serif;
+    color: #F2F2F3;
+    border-radius: 15px;
+}
+
+.welcome-message h2 {
+    font-size: 4em;
+    font-family: 'Futura', sans-serif;
+    margin-top: 80px;
+    margin-right: 40px;
+    color: #F2F2F3;
+    text-align: right;
+}
+
+.welcome-message p {
+    color: #F2F2F3;
+    display: flex;
+    text-align: right;
+    justify-content: start;
+    gap: 0.5rem;
+}
+
+.logo {
+    width: 200px;
+    height: auto;
+}

@@ -1,45 +1,48 @@
 import React, { useState } from "react";
 import { parseEther } from "viem";
+import { useAccount } from "wagmi";
+import { Address } from "~~/components/scaffold-eth";
 import { useScaffoldContractWrite } from "~~/hooks/scaffold-eth";
 
 export default function NewContractModal({ closeModal }: { closeModal: () => void }) {
-  const [colaboradores, setColaboradores] = useState<string[]>([]);
-  const [dataVencimento, setDataVencimento] = useState("");
+  const { address: connectedAddress } = useAccount();
+
+  const [nomeContrato, setNomeContrato] = useState("");
+  const [descricaoContrato, setDescricaoContrato] = useState("");
+  const [colaboradores, setColaboradores] = useState([]);
   const [hashColaborador, setHashColaborador] = useState("");
-  const [userInput, setUserInput] = useState<string>("");
 
   const { writeAsync, isLoading, isMining } = useScaffoldContractWrite({
     contractName: "YourContract",
     functionName: "addContract",
-    args: ["The value to set", undefined, undefined, []],
-    value: parseEther("0.1"),
-    blockConfirmations: 1,
-    onBlockConfirmation: txnReceipt => {
-      console.log("Transaction blockHash", txnReceipt.blockHash);
-    },
+    args: [],
+    value: parseEther("0.01"),
   });
 
   const addColaborador = () => {
-    // Você pode adicionar lógica para inserir um novo colaborador, talvez um modal separado ou um input
-    setColaboradores([...colaboradores, hashColaborador]);
+    setColaboradores([...colaboradores, hashColaborador.trim()]);
     setHashColaborador("");
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    if (!nomeContrato.trim() || !descricaoContrato.trim() || colaboradores.length === 0) {
+      console.error("Por favor, preencha todos os campos antes de enviar.");
+      return;
+    }
 
     try {
-      writeAsync();
-      console.log('Transação enviada com sucesso!');
+      await writeAsync({
+        args: [connectedAddress, nomeContrato, descricaoContrato, colaboradores],
+      });
+      console.log("Transação enviada com sucesso!");
+      closeModal();
+    } catch (error) {
+      console.error("Erro ao escrever", error);
     }
-    catch (error) {
-      console.error('Erro ao escrever', error);
-    }
-    
-    e.preventDefault();
   };
 
-  // Função para remover colaborador da lista (você deve definir essa função)
-  function removeColaborador(index: number): void {
+  function removeColaborador(index) {
     setColaboradores(colaboradores.filter((_, i) => i !== index));
   }
 
@@ -58,7 +61,23 @@ export default function NewContractModal({ closeModal }: { closeModal: () => voi
               <label className="block text-sm font-medium mb-1" htmlFor="nome">
                 Nome do contrato:
               </label>
-              <input type="text" id="nome" placeholder="Nome do contrato" className="border p-1 w-full" value={userInput} onChange={e => setUserInput(e.target.value)}/>
+              <input
+                type="text"
+                placeholder="Nome do Contrato"
+                value={nomeContrato}
+                onChange={e => setNomeContrato(e.target.value)}
+              />
+            </div>
+            <div>
+              <label className="block text-sm font-medium mb-1" htmlFor="descricao">
+                Descrição do contrato:
+              </label>
+              <textarea
+                placeholder="Descrição do Contrato"
+                value={descricaoContrato}
+                onChange={e => setDescricaoContrato(e.target.value)}
+                className="border p-1 w-full"
+              />
             </div>
             <label className="block text-sm font-medium mb-1" htmlFor="colaboradores">
               Endereço da carteira dos assinantes:
@@ -90,13 +109,7 @@ export default function NewContractModal({ closeModal }: { closeModal: () => voi
             <label className="block text-sm font-medium mb-1" htmlFor="data">
               Data de vencimento:
             </label>
-            <input
-              type="date"
-              id="data"
-              value={dataVencimento}
-              onChange={e => setDataVencimento(e.target.value)}
-              className="border p-1 w-full"
-            />
+            <input type="date" id="data" />
           </div>
           <div className="flex items-center justify-end mt-4">
             <button type="submit" className="btn btn-primary">

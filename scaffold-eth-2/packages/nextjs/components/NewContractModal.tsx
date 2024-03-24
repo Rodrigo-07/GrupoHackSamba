@@ -2,8 +2,39 @@ import React, { useState } from "react";
 import { parseEther } from "viem";
 import { useAccount } from "wagmi";
 import { useScaffoldContractWrite } from "~~/hooks/scaffold-eth";
+import axios from 'axios';
+
 
 export default function NewContractModal({ closeModal }: { closeModal: () => void }) {
+  const [file, setFile] = useState("");
+
+  async function upload() {
+    const formData = new FormData();
+    formData.append("file", file);
+  
+    const response = await axios({
+      method: "post",
+      url: "https://api.pinata.cloud/pinning/pinFileToIPFS",
+      data: formData,
+      headers: {
+        'pinata_api_key': process.env.NEXT_PUBLIC_PINATA_API_KEY,
+        'pinata_secret_api_key': process.env.NEXT_PUBLIC_PINATA_SECRET_API_KEY,
+        "Content-Type": "multipart/form-data"
+      },
+    });
+    
+    console.log(`ipfs://${response.data.IpfsHash}`);
+    console.log(`https://ipfs.io/ipfs/${response.data.IpfsHash}`)
+    return `https://ipfs.io/ipfs/${response.data.IpfsHash}`;
+  }
+
+function onFileChange(evt) {
+  if (evt.target.files) {
+    setFile(evt.target.files[0]);
+  }
+}
+
+
   const { address: connectedAddress } = useAccount();
 
   const [nomeContrato, setNomeContrato] = useState("NOME DO CONTRATO");
@@ -32,7 +63,10 @@ export default function NewContractModal({ closeModal }: { closeModal: () => voi
     // }
 
     try {
-      await writeAsync();
+      upload();
+      await writeAsync({
+        args: [connectedAddress, nomeContrato, descricaoContrato, colaboradores],
+      });
       console.log("Transação enviada com sucesso!");
       closeModal();
     } catch (error) {
@@ -108,6 +142,12 @@ export default function NewContractModal({ closeModal }: { closeModal: () => voi
               Data de vencimento:
             </label>
             <input type="date" id="data" />
+          </div>
+          <div className="mb-3">
+            <label className="block text-sm font-medium mb-1" htmlFor="file">
+              Arquivo:
+            </label>
+            <input type="file" id="file" onChange={onFileChange}/>
           </div>
           <div className="flex items-center justify-end mt-4">
             <button type="submit" className="btn btn-primary">

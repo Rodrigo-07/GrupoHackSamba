@@ -8,6 +8,7 @@ import "hardhat-gas-reporter";
 import "solidity-coverage";
 import "@nomicfoundation/hardhat-verify";
 import "hardhat-deploy";
+import "@nomicfoundation/hardhat-verify";
 import "hardhat-deploy-ethers";
 
 // If not set, it uses ours Alchemy's default API key.
@@ -30,7 +31,7 @@ const config: HardhatUserConfig = {
       },
     },
   },
-  defaultNetwork: "sepolia",
+  defaultNetwork: "scrollSepolia",
   namedAccounts: {
     deployer: {
       // By default, it will take the first Hardhat account as the deployer

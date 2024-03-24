@@ -5,6 +5,384 @@
 import { GenericContractsDeclaration } from "~~/utils/scaffold-eth/contract";
 
 const deployedContracts = {
+  534351: {
+    YourContract: {
+      address: "0x88f2bA8b39f90E79641BCC4608743ABC0dC52324",
+      abi: [
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "_owner",
+              type: "address",
+            },
+            {
+              internalType: "string",
+              name: "_name",
+              type: "string",
+            },
+            {
+              internalType: "string",
+              name: "_description",
+              type: "string",
+            },
+            {
+              internalType: "address[]",
+              name: "_assignees",
+              type: "address[]",
+            },
+            {
+              internalType: "string",
+              name: "_link",
+              type: "string",
+            },
+          ],
+          name: "addContract",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "_assignee",
+              type: "address",
+            },
+            {
+              internalType: "address",
+              name: "_owner",
+              type: "address",
+            },
+          ],
+          name: "assignContract",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "",
+              type: "address",
+            },
+            {
+              internalType: "uint256",
+              name: "",
+              type: "uint256",
+            },
+          ],
+          name: "assigneesContractList",
+          outputs: [
+            {
+              internalType: "uint256",
+              name: "",
+              type: "uint256",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "uint256",
+              name: "",
+              type: "uint256",
+            },
+          ],
+          name: "contracts",
+          outputs: [
+            {
+              internalType: "uint256",
+              name: "index",
+              type: "uint256",
+            },
+            {
+              internalType: "bool",
+              name: "status",
+              type: "bool",
+            },
+            {
+              internalType: "string",
+              name: "name",
+              type: "string",
+            },
+            {
+              internalType: "string",
+              name: "description",
+              type: "string",
+            },
+            {
+              internalType: "address",
+              name: "owner",
+              type: "address",
+            },
+            {
+              internalType: "string",
+              name: "link",
+              type: "string",
+            },
+            {
+              internalType: "uint256",
+              name: "countSignatures",
+              type: "uint256",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "_assignee",
+              type: "address",
+            },
+          ],
+          name: "getCompleteContracts",
+          outputs: [
+            {
+              components: [
+                {
+                  internalType: "uint256",
+                  name: "index",
+                  type: "uint256",
+                },
+                {
+                  internalType: "bool",
+                  name: "status",
+                  type: "bool",
+                },
+                {
+                  internalType: "string",
+                  name: "name",
+                  type: "string",
+                },
+                {
+                  internalType: "string",
+                  name: "description",
+                  type: "string",
+                },
+                {
+                  internalType: "bool[]",
+                  name: "assigns",
+                  type: "bool[]",
+                },
+                {
+                  internalType: "address",
+                  name: "owner",
+                  type: "address",
+                },
+                {
+                  internalType: "address[]",
+                  name: "assignee",
+                  type: "address[]",
+                },
+                {
+                  internalType: "string",
+                  name: "link",
+                  type: "string",
+                },
+                {
+                  internalType: "uint256",
+                  name: "countSignatures",
+                  type: "uint256",
+                },
+              ],
+              internalType: "struct YourContract.contractR[]",
+              name: "",
+              type: "tuple[]",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "_assignee",
+              type: "address",
+            },
+          ],
+          name: "getContracts",
+          outputs: [
+            {
+              components: [
+                {
+                  internalType: "uint256",
+                  name: "index",
+                  type: "uint256",
+                },
+                {
+                  internalType: "bool",
+                  name: "status",
+                  type: "bool",
+                },
+                {
+                  internalType: "string",
+                  name: "name",
+                  type: "string",
+                },
+                {
+                  internalType: "string",
+                  name: "description",
+                  type: "string",
+                },
+                {
+                  internalType: "bool[]",
+                  name: "assigns",
+                  type: "bool[]",
+                },
+                {
+                  internalType: "address",
+                  name: "owner",
+                  type: "address",
+                },
+                {
+                  internalType: "address[]",
+                  name: "assignee",
+                  type: "address[]",
+                },
+                {
+                  internalType: "string",
+                  name: "link",
+                  type: "string",
+                },
+                {
+                  internalType: "uint256",
+                  name: "countSignatures",
+                  type: "uint256",
+                },
+              ],
+              internalType: "struct YourContract.contractR[]",
+              name: "",
+              type: "tuple[]",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "_assignee",
+              type: "address",
+            },
+          ],
+          name: "getPendentContracts",
+          outputs: [
+            {
+              components: [
+                {
+                  internalType: "uint256",
+                  name: "index",
+                  type: "uint256",
+                },
+                {
+                  internalType: "bool",
+                  name: "status",
+                  type: "bool",
+                },
+                {
+                  internalType: "string",
+                  name: "name",
+                  type: "string",
+                },
+                {
+                  internalType: "string",
+                  name: "description",
+                  type: "string",
+                },
+                {
+                  internalType: "bool[]",
+                  name: "assigns",
+                  type: "bool[]",
+                },
+                {
+                  internalType: "address",
+                  name: "owner",
+                  type: "address",
+                },
+                {
+                  internalType: "address[]",
+                  name: "assignee",
+                  type: "address[]",
+                },
+                {
+                  internalType: "string",
+                  name: "link",
+                  type: "string",
+                },
+                {
+                  internalType: "uint256",
+                  name: "countSignatures",
+                  type: "uint256",
+                },
+              ],
+              internalType: "struct YourContract.contractR[]",
+              name: "",
+              type: "tuple[]",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "",
+              type: "address",
+            },
+            {
+              internalType: "uint256",
+              name: "",
+              type: "uint256",
+            },
+          ],
+          name: "ownersContractList",
+          outputs: [
+            {
+              internalType: "uint256",
+              name: "",
+              type: "uint256",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "_assignee",
+              type: "address",
+            },
+            {
+              internalType: "address",
+              name: "_owner",
+              type: "address",
+            },
+          ],
+          name: "verifyStatus",
+          outputs: [
+            {
+              internalType: "bool",
+              name: "",
+              type: "bool",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+      ],
+      inheritedFunctions: {},
+    },
+  },
   11155111: {
     YourContract: {
       address: "0xc1d17BB0968A370A8Cf6157Bf2E1Bf3974156df5",

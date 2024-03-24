@@ -7,7 +7,7 @@ import { GenericContractsDeclaration } from "~~/utils/scaffold-eth/contract";
 const deployedContracts = {
   11155111: {
     YourContract: {
-      address: "0x88f2bA8b39f90E79641BCC4608743ABC0dC52324",
+      address: "0xc1d17BB0968A370A8Cf6157Bf2E1Bf3974156df5",
       abi: [
         {
           inputs: [
@@ -30,6 +30,11 @@ const deployedContracts = {
               internalType: "address[]",
               name: "_assignees",
               type: "address[]",
+            },
+            {
+              internalType: "string",
+              name: "_link",
+              type: "string",
             },
           ],
           name: "addContract",
@@ -114,6 +119,11 @@ const deployedContracts = {
               name: "owner",
               type: "address",
             },
+            {
+              internalType: "string",
+              name: "link",
+              type: "string",
+            },
           ],
           stateMutability: "view",
           type: "function",
@@ -164,6 +174,11 @@ const deployedContracts = {
                   internalType: "address[]",
                   name: "assignee",
                   type: "address[]",
+                },
+                {
+                  internalType: "string",
+                  name: "link",
+                  type: "string",
                 },
               ],
               internalType: "struct YourContract.contractR[]",
@@ -221,6 +236,11 @@ const deployedContracts = {
                   name: "assignee",
                   type: "address[]",
                 },
+                {
+                  internalType: "string",
+                  name: "link",
+                  type: "string",
+                },
               ],
               internalType: "struct YourContract.contractR[]",
               name: "",
@@ -276,6 +296,11 @@ const deployedContracts = {
                   internalType: "address[]",
                   name: "assignee",
                   type: "address[]",
+                },
+                {
+                  internalType: "string",
+                  name: "link",
+                  type: "string",
                 },
               ],
               internalType: "struct YourContract.contractR[]",

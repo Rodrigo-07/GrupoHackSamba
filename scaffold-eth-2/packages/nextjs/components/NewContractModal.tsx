@@ -1,39 +1,71 @@
 import React, { useState } from "react";
 import { parseEther } from "viem";
 import { useAccount } from "wagmi";
-import { Address } from "~~/components/scaffold-eth";
 import { useScaffoldContractWrite } from "~~/hooks/scaffold-eth";
+import axios from 'axios';
+
 
 export default function NewContractModal({ closeModal }: { closeModal: () => void }) {
+  const [file, setFile] = useState("");
+
+  async function upload() {
+    const formData = new FormData();
+    formData.append("file", file);
+  
+    const response = await axios({
+      method: "post",
+      url: "https://api.pinata.cloud/pinning/pinFileToIPFS",
+      data: formData,
+      headers: {
+        'pinata_api_key': "2ba968b6c902d2b33b1d"	,
+        'pinata_secret_api_key': "83e34f76d7a76d316f752f85875ed10d13fa01771c11c5ab164a1ecaed66b854",
+        "Content-Type": "multipart/form-data"
+      },
+    });
+    
+    console.log(`ipfs://${response.data.IpfsHash}`);
+    console.log(`https://ipfs.io/ipfs/${response.data.IpfsHash}`)
+    return `https://ipfs.io/ipfs/${response.data.IpfsHash}`;
+  }
+
+function onFileChange(evt) {
+  if (evt.target.files) {
+    setFile(evt.target.files[0]);
+  }
+}
+
+
   const { address: connectedAddress } = useAccount();
 
   const [nomeContrato, setNomeContrato] = useState("");
   const [descricaoContrato, setDescricaoContrato] = useState("");
-  const [colaboradores, setColaboradores] = useState([]);
-  const [hashColaborador, setHashColaborador] = useState("");
+  const [assinante, setAssinante] = useState([]);
+  const [hashAssinante, setHashAssinante] = useState("");
 
   const { writeAsync, isLoading, isMining } = useScaffoldContractWrite({
     contractName: "YourContract",
     functionName: "addContract",
     args: [],
-    value: parseEther("0.01"),
+    // value: parseEther("0.01"),
   });
 
   const addColaborador = () => {
-    setColaboradores([...colaboradores, hashColaborador.trim()]);
-    setHashColaborador("");
+    setAssinante([...assinante, hashAssinante.trim()]);
+    setHashAssinante("");
   };
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e: any) => {
     e.preventDefault();
-    if (!nomeContrato.trim() || !descricaoContrato.trim() || colaboradores.length === 0) {
-      console.error("Por favor, preencha todos os campos antes de enviar.");
-      return;
-    }
+
+    // if (!nomeContrato.trim() || !descricaoContrato.trim() || assinante.length === 0) {
+    //   console.error("Por favor, preencha todos os campos antes de enviar.");
+    //   return;
+    // }
 
     try {
+      const linkIFPS = await upload();
       await writeAsync({
-        args: [connectedAddress, nomeContrato, descricaoContrato, colaboradores],
+        args: [connectedAddress, nomeContrato, descricaoContrato, assinante, linkIFPS],
       });
       console.log("Transação enviada com sucesso!");
       closeModal();
@@ -42,8 +74,8 @@ export default function NewContractModal({ closeModal }: { closeModal: () => voi
     }
   };
 
-  function removeColaborador(index) {
-    setColaboradores(colaboradores.filter((_, i) => i !== index));
+  function removeColaborador(index: any) {
+    setAssinante(assinante.filter((_, i) => i !== index));
   }
 
   return (
@@ -84,9 +116,9 @@ export default function NewContractModal({ closeModal }: { closeModal: () => voi
             </label>
             <div className="flex items-center mb-2">
               <ul>
-                {colaboradores.map((colaborador, index) => (
+                {assinante.map((assinante, index) => (
                   <li key={index} className="flex items-center justify-between">
-                    {colaborador}
+                    {assinante}
                     <button type="button" onClick={() => removeColaborador(index)} className="ml-2">
                       &#x1f5d1; {/* Unicode trash can symbol */}
                     </button>
@@ -100,8 +132,8 @@ export default function NewContractModal({ closeModal }: { closeModal: () => voi
             <input
               type="text"
               placeholder="hash do colaborador"
-              value={hashColaborador}
-              onChange={e => setHashColaborador(e.target.value)}
+              value={hashAssinante}
+              onChange={e => setHashAssinante(e.target.value)}
               className="border p-1 w-full mb-2"
             />
           </div>
@@ -110,6 +142,12 @@ export default function NewContractModal({ closeModal }: { closeModal: () => voi
               Data de vencimento:
             </label>
             <input type="date" id="data" />
+          </div>
+          <div className="mb-3">
+            <label className="block text-sm font-medium mb-1" htmlFor="file">
+              Arquivo:
+            </label>
+            <input type="file" id="file" onChange={onFileChange}/>
           </div>
           <div className="flex items-center justify-end mt-4">
             <button type="submit" className="btn btn-primary">

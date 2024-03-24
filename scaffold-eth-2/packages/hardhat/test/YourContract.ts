@@ -3,26 +3,37 @@ import { ethers } from "hardhat";
 import { YourContract } from "../typechain-types";
 
 describe("YourContract", function () {
-  // We define a fixture to reuse the same setup in every test.
-
   let yourContract: YourContract;
+  let owner: any; // Declare owner variable
+
   before(async () => {
-    const [owner] = await ethers.getSigners();
+    [owner] = await ethers.getSigners();
     const yourContractFactory = await ethers.getContractFactory("YourContract");
-    yourContract = (await yourContractFactory.deploy(owner.address)) as YourContract;
+    yourContract = (await yourContractFactory.deploy()) as YourContract;
     await yourContract.waitForDeployment();
   });
 
   describe("Deployment", function () {
-    it("Should have the right message on deploy", async function () {
-      expect(await yourContract.greeting()).to.equal("Building Unstoppable Apps!!!");
+    it("Should add a new contract", async function () {
+      const name = "Test Contract";
+      const description = "This is a test contract";
+      const assignees = [ethers.Wallet.createRandom().address];
+
+      await yourContract.addContract(owner.address, name, description, assignees);
+      const contract = await yourContract.contracts(1);
+
+      expect(contract.name).to.equal(name);
+      expect(contract.description).to.equal(description);
+      expect(contract.assignee[0]).to.equal(assignees[0]);
     });
 
-    it("Should allow setting a new message", async function () {
-      const newGreeting = "Learn Scaffold-ETH 2! :)";
+    it("Should get contracts for an assignee", async function () {
+      const assignee = ethers.Wallet.createRandom().address;
+      const contracts = await yourContract.getContracts(assignee);
 
-      await yourContract.setGreeting(newGreeting);
-      expect(await yourContract.greeting()).to.equal(newGreeting);
+      expect(contracts.length).to.equal(0);
     });
+
+    // Add more tests for other functions in your contract
   });
 });

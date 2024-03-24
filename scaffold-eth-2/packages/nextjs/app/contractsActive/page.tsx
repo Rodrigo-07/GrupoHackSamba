@@ -35,13 +35,28 @@ export default function Contratos() {
 
   return (
     <>
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
-        {contracts.map((contract, index) => (
+      <div>
+      <main className="p-6">
+        <div className="flex justify-between items-center mb-4">
+          <h1 className="text-2xl font-bold">Contratos ativos</h1>
+          <button className="btn btn-ghost" onClick={openModal}>
+            Criar
+          </button>
+        </div>
+        <div className="grid grid-cols-1 gap-4">
+          {/* Aqui você listaria os contratos ativos, possivelmente buscando-os de uma API ou estado */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
+              {contracts.map((contract: { name: string; owner: string }, index: number) => (
           <div key={index} onClick={() => handleContractClick(contract)}>
-            <DocumentCard title={contract.name} owner={contract.owner} />
+                  <DocumentCard title={contract.name} owner={contract.owner} file={contract.link} />
           </div>
-        ))}
-      </div>
+              ))}
+            </div>
+          {/* ... */}
+        </div>
+      </main>
+      {showModal && <NewContractModal closeModal={() => setShowModal(false)} />}
+    </div>
 
       {/* Modal for displaying contract details */}
       {selectedContract && (

@@ -1,40 +1,38 @@
 import React, { useState } from "react";
 import { parseEther } from "viem";
 import { useAccount } from "wagmi";
-import { Address } from "~~/components/scaffold-eth";
 import { useScaffoldContractWrite } from "~~/hooks/scaffold-eth";
 
 export default function NewContractModal({ closeModal }: { closeModal: () => void }) {
   const { address: connectedAddress } = useAccount();
 
-  const [nomeContrato, setNomeContrato] = useState("");
-  const [descricaoContrato, setDescricaoContrato] = useState("");
-  const [colaboradores, setColaboradores] = useState([]);
-  const [hashColaborador, setHashColaborador] = useState("");
+  const [nomeContrato, setNomeContrato] = useState("NOME DO CONTRATO");
+  const [descricaoContrato, setDescricaoContrato] = useState("DESCRICAO DO CONTRATO");
+  const [assinante, setAssinante] = useState(["0x295cCa0Af0DFBB260aD934cAe7406b447391C693"]);
+  const [hashAssinante, setHashAssinante] = useState("64726834");
 
   const { writeAsync, isLoading, isMining } = useScaffoldContractWrite({
     contractName: "YourContract",
     functionName: "addContract",
-    args: [],
-    value: parseEther("0.01"),
+    args: [connectedAddress, "OUTRO CONTRATO", "Description", ["0x295cCa0Af0DFBB260aD934cAe7406b447391C693"]],
+    // value: parseEther("0.01"),
   });
 
   const addColaborador = () => {
-    setColaboradores([...colaboradores, hashColaborador.trim()]);
-    setHashColaborador("");
+    setAssinante([...assinante, hashAssinante.trim()]);
+    setHashAssinante("");
   };
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e: any) => {
     e.preventDefault();
-    if (!nomeContrato.trim() || !descricaoContrato.trim() || colaboradores.length === 0) {
-      console.error("Por favor, preencha todos os campos antes de enviar.");
-      return;
-    }
+
+    // if (!nomeContrato.trim() || !descricaoContrato.trim() || assinante.length === 0) {
+    //   console.error("Por favor, preencha todos os campos antes de enviar.");
+    //   return;
+    // }
 
     try {
-      await writeAsync({
-        args: [connectedAddress, nomeContrato, descricaoContrato, colaboradores],
-      });
+      await writeAsync();
       console.log("Transação enviada com sucesso!");
       closeModal();
     } catch (error) {
@@ -42,8 +40,8 @@ export default function NewContractModal({ closeModal }: { closeModal: () => voi
     }
   };
 
-  function removeColaborador(index) {
-    setColaboradores(colaboradores.filter((_, i) => i !== index));
+  function removeColaborador(index: any) {
+    setAssinante(assinante.filter((_, i) => i !== index));
   }
 
   return (
@@ -84,9 +82,9 @@ export default function NewContractModal({ closeModal }: { closeModal: () => voi
             </label>
             <div className="flex items-center mb-2">
               <ul>
-                {colaboradores.map((colaborador, index) => (
+                {assinante.map((assinante, index) => (
                   <li key={index} className="flex items-center justify-between">
-                    {colaborador}
+                    {assinante}
                     <button type="button" onClick={() => removeColaborador(index)} className="ml-2">
                       &#x1f5d1; {/* Unicode trash can symbol */}
                     </button>
@@ -100,8 +98,8 @@ export default function NewContractModal({ closeModal }: { closeModal: () => voi
             <input
               type="text"
               placeholder="hash do colaborador"
-              value={hashColaborador}
-              onChange={e => setHashColaborador(e.target.value)}
+              value={hashAssinante}
+              onChange={e => setHashAssinante(e.target.value)}
               className="border p-1 w-full mb-2"
             />
           </div>

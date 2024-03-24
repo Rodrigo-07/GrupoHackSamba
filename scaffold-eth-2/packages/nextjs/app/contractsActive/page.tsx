@@ -21,11 +21,11 @@ export default function Contratos() {
     args: [connectedAddress], // Utilize o endereço diretamente
   });
 
-  // useEffect(() => {
-  //   if (data) {
-  //     setContracts(data); // Change the argument to parsedData
-  //   }
-  // }, [data]);
+  useEffect(() => {
+    if (data) {
+      setContracts(data); // Change the argument to parsedData
+    }
+  }, [data]);
 
   if (isLoading) {
     return <div>Carregando contratos...</div>;
@@ -48,7 +48,7 @@ export default function Contratos() {
           {/* Aqui você listaria os contratos ativos, possivelmente buscando-os de uma API ou estado */}
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
             {contracts.map((contract: { name: string; owner: string }, index: number) => (
-              <DocumentCard key={index} title={contract.name} owner={contract.owner} />
+              <DocumentCard key={index} title={contract.name} owner={contract.owner} file={contract.link} />
             ))}
           </div>
           {/* ... */}

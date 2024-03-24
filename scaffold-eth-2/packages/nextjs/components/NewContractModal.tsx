@@ -17,8 +17,8 @@ export default function NewContractModal({ closeModal }: { closeModal: () => voi
       url: "https://api.pinata.cloud/pinning/pinFileToIPFS",
       data: formData,
       headers: {
-        'pinata_api_key': process.env.NEXT_PUBLIC_PINATA_API_KEY,
-        'pinata_secret_api_key': process.env.NEXT_PUBLIC_PINATA_SECRET_API_KEY,
+        'pinata_api_key': "2ba968b6c902d2b33b1d"	,
+        'pinata_secret_api_key': "83e34f76d7a76d316f752f85875ed10d13fa01771c11c5ab164a1ecaed66b854",
         "Content-Type": "multipart/form-data"
       },
     });
@@ -37,15 +37,15 @@ function onFileChange(evt) {
 
   const { address: connectedAddress } = useAccount();
 
-  const [nomeContrato, setNomeContrato] = useState("NOME DO CONTRATO");
-  const [descricaoContrato, setDescricaoContrato] = useState("DESCRICAO DO CONTRATO");
-  const [assinante, setAssinante] = useState(["0x295cCa0Af0DFBB260aD934cAe7406b447391C693"]);
-  const [hashAssinante, setHashAssinante] = useState("64726834");
+  const [nomeContrato, setNomeContrato] = useState("");
+  const [descricaoContrato, setDescricaoContrato] = useState("");
+  const [assinante, setAssinante] = useState([]);
+  const [hashAssinante, setHashAssinante] = useState("");
 
   const { writeAsync, isLoading, isMining } = useScaffoldContractWrite({
     contractName: "YourContract",
     functionName: "addContract",
-    args: [connectedAddress, "OUTRO CONTRATO", "Description", ["0x295cCa0Af0DFBB260aD934cAe7406b447391C693"]],
+    args: [],
     // value: parseEther("0.01"),
   });
 
@@ -63,9 +63,9 @@ function onFileChange(evt) {
     // }
 
     try {
-      upload();
+      const linkIFPS = await upload();
       await writeAsync({
-        args: [connectedAddress, nomeContrato, descricaoContrato, colaboradores],
+        args: [connectedAddress, nomeContrato, descricaoContrato, assinante, linkIFPS],
       });
       console.log("Transação enviada com sucesso!");
       closeModal();

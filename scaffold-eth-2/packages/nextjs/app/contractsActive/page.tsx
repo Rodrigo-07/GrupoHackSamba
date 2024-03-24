@@ -1,10 +1,13 @@
 "use client";
 
-import React, { useState, useEffect } from 'react';
-import { useAccount } from 'wagmi';
-import DocumentCard from '~~/components/DocumentCard';
-import { useScaffoldContractRead } from '~~/hooks/scaffold-eth';
-import { Modal, ModalContent, ModalHeader, ModalBody, ModalFooter, Button, useDisclosure } from "@nextui-org/react";
+import React, { useEffect, useState } from "react";
+import { useAccount } from "wagmi";
+// import { useState } from 'react';
+import ContractCard from "~~/components/ContractCard";
+import DocumentCard from "~~/components/DocumentCard";
+import NewContractModal from "~~/components/NewContractModal";
+import { useScaffoldContractRead } from "~~/hooks/scaffold-eth";
+import './page.css';
 
 export default function Contratos() {
   const { address: connectedAddress } = useAccount();
@@ -37,9 +40,9 @@ export default function Contratos() {
     <>
       <div>
       <main className="p-6">
-        <div className="flex justify-between items-center mb-4">
+        <div  className="body" className="flex justify-between items-center mb-4">
           <h1 className="text-2xl font-bold">Contratos ativos</h1>
-          <button className="btn btn-ghost" onClick={openModal}>
+          <button className="botao" className="btn btn-ghost" onClick={openModal}>
             Criar
           </button>
         </div>

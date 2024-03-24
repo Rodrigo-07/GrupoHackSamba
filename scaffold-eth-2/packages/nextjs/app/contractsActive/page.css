@@ -1,0 +1,20 @@
+body {
+    margin: 0;
+    padding: 0;
+    background: linear-gradient(to right, #000000, #5E489B);
+    min-height: 100vh; /* Faz o corpo cobrir a altura total da tela */
+}
+
+h1 {
+    font-size: 3em;
+    font-family: 'Futura', sans-serif;
+    margin-top: 15px;
+    color: #8C54FB;
+}
+
+.botao {
+    background-color: #1ebaf9;
+    border-radius: 15px;
+    padding: 5px, 10px;
+}
+

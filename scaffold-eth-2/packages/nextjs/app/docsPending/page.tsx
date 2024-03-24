@@ -2,10 +2,10 @@
 
 import React, { useEffect, useState } from "react";
 import { useAccount } from "wagmi";
-import DocumentCard from "~~/components/DocumentCard";
+import DocumentCard from "~~/components/PendingCard";
 import { Address } from "~~/components/scaffold-eth";
 import { useScaffoldContractRead } from "~~/hooks/scaffold-eth";
-  
+
 const DocsPending = () => {
   const { address: connectedAddress } = useAccount();
 
@@ -29,9 +29,17 @@ const DocsPending = () => {
 
   return (
     <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
-      {contractsPeding.map((contract, index) => (
-        <DocumentCard key={index} title={contract.name} owner={contract.owner} />
-      ))}
+      {contractsPeding.map((contract, index) => {
+        if (contract.owner !== "0x0000000000000000000000000000000000000000") {
+          console.log(contract.owner);
+          return <DocumentCard key={index} title={contract.name} owner={contract.owner} />;
+        }
+        else{
+          console.log(contract.owner);
+          return null; // Return null to render nothing when the condition is not met
+
+        }
+      })}
     </div>
   );
 };

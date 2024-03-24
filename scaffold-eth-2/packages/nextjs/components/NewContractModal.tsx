@@ -17,8 +17,8 @@ export default function NewContractModal({ closeModal }: { closeModal: () => voi
       url: "https://api.pinata.cloud/pinning/pinFileToIPFS",
       data: formData,
       headers: {
-        'pinata_api_key': process.env.NEXT_PUBLIC_PINATA_API_KEY,
-        'pinata_secret_api_key': process.env.NEXT_PUBLIC_PINATA_SECRET_API_KEY,
+        'pinata_api_key': "2ba968b6c902d2b33b1d",
+        'pinata_secret_api_key': "83e34f76d7a76d316f752f85875ed10d13fa01771c11c5ab164a1ecaed66b854",
         "Content-Type": "multipart/form-data"
       },
     });

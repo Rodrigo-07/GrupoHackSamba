@@ -1,7 +1,7 @@
 body {
     margin: 0;
     padding: 0;
-    background: linear-gradient(to right, #000000, #8C54FB);
+    background: linear-gradient(to right, #000000, #5E489B);
     min-height: 100vh; /* Faz o corpo cobrir a altura total da tela */
 }
 

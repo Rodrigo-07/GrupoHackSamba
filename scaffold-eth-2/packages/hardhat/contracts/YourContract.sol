@@ -24,6 +24,7 @@ contract YourContract {
         address owner;
         address[] assignee;
         string link;
+        uint countSignatures;
     }
     mapping(uint => contractR) public contracts;
     mapping(address => uint[]) public ownersContractList;
@@ -35,7 +36,7 @@ contract YourContract {
         for (uint i = 0; i < _assignees.length; i++) {
             assigneesContractList[_assignees[i]].push(indexContract);
         }
-        contracts[indexContract] = contractR(indexContract, true, _name, _description,new bool[](2),_owner,_assignees, _link);
+        contracts[indexContract] = contractR(indexContract, true, _name, _description,new bool[](_assignees.length+1),_owner,_assignees, _link,0);
     }
     function getContracts(address _assignee) public view returns (contractR[] memory) {
         uint[] memory _contracts = assigneesContractList[_assignee];
@@ -69,18 +70,28 @@ contract YourContract {
             for (uint i = 0; i < _contracts.length; i++) {
                 if(contracts[_contracts[i]].owner == _assignee){
                     contracts[_contracts[i]].assigns[0] = true;
-                    if(contracts[_contracts[i]].assigns[1]){
-                        contracts[_contracts[i]].status= false;
+                    contracts[_contracts[i]].countSignatures++;
+                            if(contracts[_contracts[i]].assigns.length==contracts[_contracts[i]].countSignatures){
+                                contracts[_contracts[i]].status = false;
+                            }
+
+                    
                     }
+                    
                 }
-        }
+        
+
         }else{
             for (uint i = 0; i < _contracts.length; i++) {
                 if(contracts[_contracts[i]].owner == _owner){
                     contracts[_contracts[i]].assigns[1] = true;
-                    if(contracts[_contracts[i]].assigns[0]){
-                        contracts[_contracts[i]].status= false;
-                    }
+                    contracts[_contracts[i]].countSignatures++;
+                            if(contracts[_contracts[i]].assigns.length==contracts[_contracts[i]].countSignatures){
+                                contracts[_contracts[i]].status = false;
+                            }
+
+                    
+                    
                 }
             }
         }

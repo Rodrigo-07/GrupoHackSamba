@@ -15,12 +15,12 @@ const Home: NextPage = () => {
     <main className="main-content">
         <section className="brand-section">
           <img className="logo" src="/logo.png" alt="Logo da ThinkLink" />
-          <h1>ThinkLink</h1>
+          <h1>TrustLink</h1>
           <p>Smart solutions for documents storage  <br /> and contracts signature.</p>
           <button className="access-documents"><Link href="./about"> ACCESS DOCUMENTS</Link></button>
         </section>
         <aside className="welcome-message">
-          <h2>HELLO, WELCOME TO THINKLINK!</h2>
+          <h2>HELLO, WELCOME TO TRUSTLINK!</h2>
           <div className="endereco"><p>Connected Address: <Address address={connectedAddress} /></p></div>
         </aside>
       </main>

@@ -5,6 +5,7 @@ const About = () => {
     <div>
       <h1>About Page</h1>
       <p>This is the about page</p>
+      <h1>Olá, seja bem-vindo</h1>
     </div>
   );
 };

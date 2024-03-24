@@ -7,6 +7,7 @@ import ContractCard from "~~/components/ContractCard";
 import DocumentCard from "~~/components/DocumentCard";
 import NewContractModal from "~~/components/NewContractModal";
 import { useScaffoldContractRead } from "~~/hooks/scaffold-eth";
+import './page.css';
 
 export default function Contratos() {
   const { address: connectedAddress } = useAccount();
@@ -38,9 +39,9 @@ export default function Contratos() {
   return (
     <div>
       <main className="p-6">
-        <div className="flex justify-between items-center mb-4">
+        <div  className="body" className="flex justify-between items-center mb-4">
           <h1 className="text-2xl font-bold">Contratos ativos</h1>
-          <button className="btn btn-ghost" onClick={openModal}>
+          <button className="botao" className="btn btn-ghost" onClick={openModal}>
             Criar
           </button>
         </div>

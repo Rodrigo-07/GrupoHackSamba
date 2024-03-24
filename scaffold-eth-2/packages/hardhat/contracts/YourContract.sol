@@ -23,18 +23,19 @@ contract YourContract {
         bool[] assigns;
         address owner;
         address[] assignee;
+        string link;
     }
     mapping(uint => contractR) public contracts;
     mapping(address => uint[]) public ownersContractList;
     mapping(address => uint[]) public assigneesContractList;
-    function addContract(address _owner,string memory _name, string memory _description,address[] memory _assignees) public {
+    function addContract(address _owner,string memory _name, string memory _description,address[] memory _assignees, string memory _link) public {
         indexContract++;
         ownersContractList[_owner].push(indexContract);
         assigneesContractList[_owner].push(indexContract);
         for (uint i = 0; i < _assignees.length; i++) {
             assigneesContractList[_assignees[i]].push(indexContract);
         }
-        contracts[indexContract] = contractR(indexContract, true, _name, _description,new bool[](2),_owner,_assignees);
+        contracts[indexContract] = contractR(indexContract, true, _name, _description,new bool[](2),_owner,_assignees, _link);
     }
     function getContracts(address _assignee) public view returns (contractR[] memory) {
         uint[] memory _contracts = assigneesContractList[_assignee];

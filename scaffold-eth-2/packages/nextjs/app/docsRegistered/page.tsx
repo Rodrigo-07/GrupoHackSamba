@@ -6,7 +6,6 @@ import DocumentCard from "~~/components/DocumentCard";
 import { Address } from "~~/components/scaffold-eth";
 import { useScaffoldContractRead } from "~~/hooks/scaffold-eth";
 
-
 const DocsRegistered = () => {
   const { address: connectedAddress } = useAccount();
 

@@ -8,10 +8,13 @@ import DocumentCard from "~~/components/DocumentCard";
 import NewContractModal from "~~/components/NewContractModal";
 import { useScaffoldContractRead } from "~~/hooks/scaffold-eth";
 import './page.css';
+import { Modal, ModalContent, ModalHeader, ModalBody, ModalFooter, Button, useDisclosure } from "@nextui-org/react";
+
 
 export default function Contratos() {
   const { address: connectedAddress } = useAccount();
   const [contracts, setContracts] = useState([]);
+  const [showModal, setShowModal] = React.useState(false);
   const [selectedContract, setSelectedContract] = useState(null);
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
 
@@ -30,6 +33,10 @@ export default function Contratos() {
   if (isLoading) {
     return <div>Carregando contratos...</div>;
   }
+
+  const openModal = () => {
+    setShowModal(true);
+  };
 
   const handleContractClick = contract => {
     setSelectedContract(contract);

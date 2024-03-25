@@ -79,7 +79,12 @@ export default function Contratos() {
                 </ModalHeader>
                 <ModalBody>
                   {/* Display other contract details here */}
+                  <h2>Name: {selectedContract.name}</h2>
                   <p>Owner: {selectedContract.owner}</p>
+
+                  <p>Description: {selectedContract.description}</p>
+                  <p>Link: {selectedContract.link}</p>
+
                   {/* ... more details ... */}
                 </ModalBody>
                 <ModalFooter>

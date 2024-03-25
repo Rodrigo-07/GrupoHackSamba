@@ -11401,7 +11401,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"husky@npm:^8.0.1":
+"husky@npm:^8.0.3":
   version: 8.0.3
   resolution: "husky@npm:8.0.3"
   bin:
@@ -15958,7 +15958,7 @@ __metadata:
   resolution: "se-2@workspace:."
   dependencies:
     arweave: ^1.15.0
-    husky: ^8.0.1
+    husky: ^8.0.3
     lint-staged: ^13.0.3
     postcss: ^8.4.38
     styled-components: ^6.1.8
